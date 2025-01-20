@@ -5,6 +5,7 @@ from datetime import datetime
 
 import psycopg2
 import pandas as pd
+import uvicorn
 from psycopg2.extras import RealDictCursor
 from fastapi import FastAPI, Depends
 from loguru import logger
@@ -64,7 +65,7 @@ def load_models():
     # Загрузка модели
     logger.info('loading model')
 
-    model_path = get_model_path('model_lgbm.pkl')
+    model_path = get_model_path('service/model_lgbm.pkl')
 
     with open(model_path , 'rb') as file:
         model = pickle.load(file)
@@ -120,3 +121,6 @@ def get_post_recom(id: int, time: datetime, limit: int = 10, db = Depends(get_db
             "topic": content[content.post_id == i].topic.values[0]
         }) for i in post_predict
     ]
+
+if __name__ == '__main__':
+    uvicorn.run(app)
