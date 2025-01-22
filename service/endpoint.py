@@ -35,13 +35,6 @@ def batch_load_sql(query: str) -> pd.DataFrame:
     conn.close()
     return pd.concat(chunks, ignore_index=True)
 
-def get_model_path(path: str) -> str:
-    if os.environ.get("IS_LMS") == "1":  # проверяем где выполняется код в лмс, или локально. Немного магии
-        MODEL_PATH = '/workdir/user_input/model'
-    else:
-        MODEL_PATH = path
-    return MODEL_PATH
-
 def load_features():
     # Загрузка уникальных постов и юзеровов с лайками
     logger.info('loading liked posts')
@@ -65,7 +58,7 @@ def load_models():
     # Загрузка модели
     logger.info('loading model')
 
-    model_path = get_model_path('service/model_lgbm.pkl')
+    model_path = 'service/model_lgbm.pkl'
 
     with open(model_path , 'rb') as file:
         model = pickle.load(file)
