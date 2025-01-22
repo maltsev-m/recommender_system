@@ -14,6 +14,7 @@ from sqlalchemy import create_engine
 from database import SQLALCHEMY_DATABASE_URL
 from schema import PostGet
 
+MODEL_PATH = 'service/model_lgbm.pkl'
 
 app = FastAPI()
 
@@ -58,9 +59,7 @@ def load_models():
     # Загрузка модели
     logger.info('loading model')
 
-    model_path = 'service/model_lgbm.pkl'
-
-    with open(model_path , 'rb') as file:
+    with open(MODEL_PATH, 'rb') as file:
         model = pickle.load(file)
         return model
 
