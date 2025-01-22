@@ -27,11 +27,6 @@ class PostGet(BaseModel):
         orm_mode = True
 
 
-class Response(BaseModel):
-    exp_group: str
-    recommendations: List[PostGet]
-
-
 class FeedGet(BaseModel):
     user_id: int
     post_id: int
